@@ -1,0 +1,20 @@
+{
+  "name": "reactcleanarchitecture",
+  "version": "1.0.0",
+  "description": "Curso de ReactJS, Hooks, Recoil, TDD, Clean Architecture, SOLID",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcusConduru/ReactCleanArchitecture.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcusConduru/ReactCleanArchitecture/issues"
+  },
+  "homepage": "https://github.com/MarcusConduru/ReactCleanArchitecture#readme"
+}
