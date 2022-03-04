@@ -1,4 +1,5 @@
-import React, { useState } from 'React'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'React'
 import Styles from './login-styles.scss'
 // import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import Footer from '@/presentation/components/footer/footer'
@@ -6,22 +7,29 @@ import FormStatus from '@/presentation/components/form-status/form-status'
 import Input from '@/presentation/components/input/input'
 import LoginHeader from '@/presentation/components/login-header/login-header'
 import Context from '@/presentation/contexts/form/form-context'
+import { Validation } from '@/presentation/protocols/validation'
 
-const login: React.FC = () => {
+type Props = {
+  validation: Validation
+}
+
+const login: React.FC<Props> = ({ validation }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
+    email: '',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
+    mainError: ''
   })
 
-  const [errorState, setErrorState] = useState({
-    email: 'Campo obrigatório',
-    password: 'Campo obrigatório',
-    main: ''
-  })
+  useEffect(() => {
+    validation.valdiate({ email: state.email })
+  }, [state.email])
 
   return (
     <div className={Styles.login}>
       <LoginHeader />
-      <Context.Provider value={{ state, errorState }}>
+      <Context.Provider value={{ state, setState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder='Digite seu e-mail' />
