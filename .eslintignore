@@ -3,3 +3,8 @@ node_modules
 coverage
 public
 *.scss
+jest-setup.ts
+jest.config.js
+webpack.config.js
+*.d.ts
+yarn-error.log

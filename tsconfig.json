@@ -3,23 +3,26 @@
     "target": "es6",
     "lib": [
       "dom",
-      "dom.iterable",
+      "dom.Iterable",
       "esnext"
     ],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "jsx": "react",
-    "rootDir": "src",
+    "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
     },
     "allowJs": true,
-    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "jest-setup.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

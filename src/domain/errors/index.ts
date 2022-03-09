@@ -1,2 +1,2 @@
-export * from './invalid-credentials-erros'
-export * from './unexpect-erros'
+export * from './invalid-credentials-error';
+export * from './unexpected-error';
