@@ -1,6 +1,6 @@
 {
   "name": "reactcleanarchitecture",
-  "version": "1.0.1",
+  "version": "1.3.0",
   "main": "index.js",
   "description": "Curso de ReactJS, Hooks, Recoil, TDD, Clean Architecture, SOLID",
   "license": "MIT",
