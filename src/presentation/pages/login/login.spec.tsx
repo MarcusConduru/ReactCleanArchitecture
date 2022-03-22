@@ -11,7 +11,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { Login } from '@/presentation/pages';
+import Login from './login';
 import faker from 'faker';
 import { InvalidCredentialsError } from '@/domain/errors';
 import { Router } from 'react-router-dom';

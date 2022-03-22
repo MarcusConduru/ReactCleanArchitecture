@@ -17,7 +17,7 @@ type Props = {
   saveAccessToken: SaveAccessToken;
 };
 
-export const Login = ({
+const Login: React.FC<Props> = ({
   validation,
   authentication,
   saveAccessToken,
@@ -65,7 +65,6 @@ export const Login = ({
   return (
     <div className={Styles.login}>
       <LoginHeader />
-
       <Context.Provider value={{ state, setState }}>
         <form
           data-testid="form"
@@ -90,12 +89,12 @@ export const Login = ({
           <Link data-testid="signup" to="/signup" className={Styles.link}>
             Criar conta
           </Link>
-
           <FormStatus />
         </form>
       </Context.Provider>
-
       <Footer />
     </div>
   );
 };
+
+export default Login;
