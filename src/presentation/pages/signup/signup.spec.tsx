@@ -1,6 +1,11 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+} from '@testing-library/react';
 import SignUp from './signup';
 import { Helper, ValidationStub } from '@/presentation/test';
 import faker from 'faker';
@@ -13,15 +18,10 @@ type SutParams = {
   validationError?: string;
 };
 
-
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   validationStub.errorMessage = params?.validationError;
-  const sut = render(
-    <SignUp 
-      validation={validationStub}
-    />
-  );
+  const sut = render(<SignUp validation={validationStub} />);
 
   return {
     sut,
@@ -45,9 +45,9 @@ const simulateValidSubmit = async (
 
 describe('SignUp Component', () => {
   afterEach(cleanup);
-  
+
   test('Should start with initial state', () => {
-    const validationError = faker.random.words()
+    const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
     Helper.testChildCount(sut, 'error-wrap', 0);
     Helper.testButtonIsDisable(sut, 'submit', true);
@@ -121,7 +121,6 @@ describe('SignUp Component', () => {
   test('Should show spinner on submit', async () => {
     const { sut } = makeSut();
     await simulateValidSubmit(sut);
-    const spinner = sut.getByTestId('spinner');
-    expect(spinner).toBeInTheDocument();
+    Helper.testElementExists(sut, 'spinner');
   });
 });

@@ -113,8 +113,7 @@ describe('Login Component', () => {
   test('Should show spinner on submit', async () => {
     const { sut } = makeSut();
     await simulateValidSubmit(sut);
-    const spinner = sut.getByTestId('spinner');
-    expect(spinner).toBeInTheDocument();
+    Helper.testElementExists(sut, 'spinner');
   });
 
   test('Should call Authentication with correct values', async () => {
