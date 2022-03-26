@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import {
   cleanup,
   fireEvent,
@@ -6,31 +6,49 @@ import {
   RenderResult,
   waitFor,
 } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 import SignUp from './signup';
-import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test';
+import {
+  AddAccountSpy,
+  Helper,
+  SaveAccessTokenMock,
+  ValidationStub,
+} from '@/presentation/test';
 import faker from 'faker';
 import { EmailInUseError } from '@/validation/errors';
 
 type SutTypes = {
   sut: RenderResult;
   addAccountSpy: AddAccountSpy;
+  saveAccessToken: SaveAccessTokenMock;
 };
 
 type SutParams = {
   validationError?: string;
 };
 
+const history = createMemoryHistory({ initialEntries: ['/signup'] });
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const addAccountSpy = new AddAccountSpy();
+  const saveAccessToken = new SaveAccessTokenMock();
   validationStub.errorMessage = params?.validationError;
   const sut = render(
-    <SignUp validation={validationStub} addAccount={addAccountSpy} />,
+    <Router history={history}>
+      <SignUp
+        validation={validationStub}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessToken}
+      />
+      ,
+    </Router>,
   );
 
   return {
     sut,
     addAccountSpy,
+    saveAccessToken,
   };
 };
 
@@ -165,5 +183,13 @@ describe('SignUp Component', () => {
     await simulateValidSubmit(sut);
     Helper.testElementText(sut, error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
+  });
+
+  test('Should call SaveAccessToken on success', async () => {
+    const { sut, addAccountSpy, saveAccessToken } = makeSut();
+    await simulateValidSubmit(sut);
+    expect(saveAccessToken.accessToken).toBe(addAccountSpy.account.accessToken);
+    expect(history.length).toBe(1);
+    expect(history.location.pathname).toBe('/');
   });
 });
