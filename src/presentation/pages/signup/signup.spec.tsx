@@ -202,4 +202,12 @@ describe('SignUp Component', () => {
     Helper.testElementText(sut, error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
   });
+
+  test('Should go to login page', () => {
+    const { sut } = makeSut();
+    const LoginLink = sut.getByTestId('login-link');
+    fireEvent.click(LoginLink);
+    expect(history.length).toBe(1);
+    expect(history.location.pathname).toBe('/login');
+  });
 });
