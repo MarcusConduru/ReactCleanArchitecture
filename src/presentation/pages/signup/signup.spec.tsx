@@ -17,6 +17,7 @@ import {
 } from '@/presentation/test';
 import faker from 'faker';
 import { EmailInUseError } from '@/validation/errors';
+import { InvalidCredentialsError } from '@/domain/errors';
 
 type SutTypes = {
   sut: RenderResult;
@@ -191,5 +192,14 @@ describe('SignUp Component', () => {
     expect(saveAccessToken.accessToken).toBe(addAccountSpy.account.accessToken);
     expect(history.length).toBe(1);
     expect(history.location.pathname).toBe('/');
+  });
+
+  test('Should present error if saveAccessToken fails', async () => {
+    const { sut, saveAccessToken } = makeSut();
+    const error = new InvalidCredentialsError();
+    jest.spyOn(saveAccessToken, 'save').mockRejectedValueOnce(error);
+    await simulateValidSubmit(sut);
+    Helper.testElementText(sut, error.message);
+    Helper.testChildCount(sut, 'error-wrap', 1);
   });
 });
