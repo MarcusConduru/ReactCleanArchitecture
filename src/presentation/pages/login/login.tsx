@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Validation } from '@/presentation/protocols/validation';
 import { Link, useHistory } from 'react-router-dom';
 import { Authentication, SaveAccessToken } from '@/domain/usecases';
+import SubmitButton from '@/presentation/components/submit-button/submit-button';
 
 type Props = {
   validation: Validation;
@@ -25,6 +26,7 @@ const Login: React.FC<Props> = ({
   const history = useHistory();
   const [state, setState] = useState({
     isLoading: false,
+    isFormInvalid: true,
     email: '',
     password: '',
     emailError: '',
@@ -33,17 +35,21 @@ const Login: React.FC<Props> = ({
   });
 
   useEffect(() => {
+    const emailError = validation.validate('email', state.email);
+    const passwordError = validation.validate('password', state.email);
+
     setState((state) => ({
       ...state,
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
+      emailError,
+      passwordError,
+      isFormInvalid: !!emailError || !!passwordError,
     }));
   }, [validation, state.email, state.password]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (state.isLoading || state.emailError || state.passwordError) {
+      if (state.isLoading || state.isFormInvalid) {
         return;
       }
       setState((state) => ({ ...state, isLoading: true }));
@@ -78,15 +84,7 @@ const Login: React.FC<Props> = ({
             name="password"
             placeholder="Digite sua senha"
           />
-
-          <button
-            className={Styles.submit}
-            disabled={!!state.emailError || !!state.passwordError}
-            type="submit"
-            data-testid="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton text="Entrar" />
           <Link data-testid="signup-link" to="/signup" className={Styles.link}>
             Criar conta
           </Link>

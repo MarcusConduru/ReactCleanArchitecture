@@ -15,7 +15,7 @@ export const testButtonIsDisable = (
   fieldName: string,
   isDisable: boolean,
 ): void => {
-  const button = sut.getByTestId(fieldName) as HTMLButtonElement;
+  const button = sut.getByText(fieldName) as HTMLButtonElement;
   expect(button.disabled).toBe(isDisable);
 };
 

@@ -5,3 +5,4 @@ export * from './footer/footer';
 export * from './input/input';
 export * from './router/router';
 export * from './form-status/form-status';
+export * from './submit-button/submit-button';
