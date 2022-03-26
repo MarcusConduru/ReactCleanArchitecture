@@ -146,8 +146,7 @@ describe('Login Component', () => {
     const error = new InvalidCredentialsError();
     jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
-    const mainError = sut.getByText(error.message);
-    expect(mainError).toBeInTheDocument();
+    Helper.testElementText(sut, error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
   });
 
@@ -168,8 +167,7 @@ describe('Login Component', () => {
       .spyOn(saveAccessTokenMock, 'save')
       .mockReturnValueOnce(Promise.reject(error));
     await simulateValidSubmit(sut);
-    const mainError = sut.getByText(error.message);
-    expect(mainError).toBeInTheDocument();
+    Helper.testElementText(sut, error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
   });
 

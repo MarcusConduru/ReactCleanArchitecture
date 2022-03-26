@@ -49,11 +49,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form);
 };
 
-const testElementText = (sut: RenderResult, fieldName: string) => {
-  const el = sut.getByText(fieldName) as unknown as HTMLElement;
-  expect(el.textContent).toBe(fieldName);
-};
-
 describe('SignUp Component', () => {
   afterEach(cleanup);
 
@@ -168,7 +163,7 @@ describe('SignUp Component', () => {
     const error = new EmailInUseError();
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
-    testElementText(sut, error.message);
+    Helper.testElementText(sut, error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
   });
 });

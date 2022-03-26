@@ -44,3 +44,8 @@ export const testElementExists = (sut: RenderResult, fieldName: string) => {
   const el = sut.getByTestId(fieldName);
   expect(el).toBeTruthy();
 };
+
+export const testElementText = (sut: RenderResult, fieldName: string) => {
+  const el = sut.getByText(fieldName) as unknown as HTMLElement;
+  expect(el.textContent).toBe(fieldName);
+};
