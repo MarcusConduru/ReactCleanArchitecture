@@ -109,15 +109,7 @@ const SignUp: React.FC<Props> = ({
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-
-          <button
-            data-testid="submit"
-            disabled={state.isFormInvalid}
-            className={Styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          
           <SubmitButton text="Cadastrar" />
           <Link
             data-testid="login-link"
