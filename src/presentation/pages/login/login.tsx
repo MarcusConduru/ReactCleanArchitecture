@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Footer,
   LoginHeader,
@@ -35,8 +36,10 @@ const Login: React.FC<Props> = ({
   });
 
   useEffect(() => {
-    const emailError = validation.validate('email', state.email);
-    const passwordError = validation.validate('password', state.email);
+    const { email, password } = state;
+    const formData = { email, password };
+    const emailError = validation.validate('email', formData);
+    const passwordError = validation.validate('password', formData);
 
     setState((state) => ({
       ...state,
@@ -44,7 +47,7 @@ const Login: React.FC<Props> = ({
       passwordError,
       isFormInvalid: !!emailError || !!passwordError,
     }));
-  }, [validation, state.email, state.password]);
+  }, [state.email, state.password]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
