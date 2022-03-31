@@ -9,4 +9,5 @@ webpack.config.js
 *.d.ts
 yarn-error.log
 plugins
+support
 *.json
