@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext } from 'react';
+import { useContext } from 'react';
 import Styles from './input-styles.scss';
 import Context from '@/presentation/contexts/form/form-context';
 
@@ -11,30 +11,28 @@ export const Input = (props: Props) => {
   const { state, setState } = useContext(Context);
   const error = state[`${props.name}Error`];
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const getStatus = () => {
-    return error ? '🔴' : '🟢';
-  };
-
-  const getTitle = () => {
-    return error || 'Tudo certo!';
-  };
-
   return (
     <div className={Styles.inputWrap}>
-      <input {...props} data-testid={props.name} onChange={handleChange} />
+      <input
+        {...props}
+        id={props.name}
+        placeholder=" "
+        onFocus={(e) => {
+          e.target.readOnly = false;
+        }}
+        readOnly
+        data-testid={props.name}
+        onChange={(e) =>
+          setState({ ...state, [e.target.name]: e.target.value })
+        }
+      />
+      <label htmlFor={props.name}>{props.placeholder}</label>
       <span
         data-testid={`${props.name}-status`}
-        title={getTitle()}
+        title={error || 'Tudo certo!'}
         className={Styles.status}
       >
-        {getStatus()}
+        {error ? '🔴' : '🟢'}
       </span>
     </div>
   );
