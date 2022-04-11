@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { fireEvent, RenderResult } from '@testing-library/react';
 import faker from 'faker';
 
@@ -22,11 +23,17 @@ export const testButtonIsDisable = (
 export const testStatusForField = (
   sut: RenderResult,
   fieldName: string,
-  validationError?: string,
+  validationError: string = '',
 ) => {
-  const FieldStatus = sut.getByTestId(`${fieldName}-status`);
-  expect(FieldStatus.title).toBe(validationError || 'Tudo certo!');
-  expect(FieldStatus.textContent).toBe(validationError ? '🔴' : '🟢');
+  const Wrap = sut.getByTestId(`${fieldName}-wrap`);
+  const field = sut.getByTestId(`${fieldName}`);
+  const Label = sut.getByTestId(`${fieldName}-label`);
+
+  expect(Wrap.getAttribute('data-status')).toBe(
+    validationError ? 'invalid' : 'valid',
+  );
+  expect(field.title).toBe(validationError);
+  expect(Label.title).toBe(validationError);
 };
 
 export const populateField = (

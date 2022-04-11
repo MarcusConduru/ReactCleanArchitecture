@@ -12,10 +12,15 @@ export const Input = (props: Props) => {
   const error = state[`${props.name}Error`];
 
   return (
-    <div className={Styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={Styles.inputWrap}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
         {...props}
         id={props.name}
+        title={error}
         placeholder=" "
         onFocus={(e) => {
           e.target.readOnly = false;
@@ -26,14 +31,13 @@ export const Input = (props: Props) => {
           setState({ ...state, [e.target.name]: e.target.value })
         }
       />
-      <label htmlFor={props.name}>{props.placeholder}</label>
-      <span
-        data-testid={`${props.name}-status`}
-        title={error || 'Tudo certo!'}
-        className={Styles.status}
+      <label
+        data-testid={`${props.name}-label`}
+        title={error}
+        htmlFor={props.name}
       >
-        {error ? '🔴' : '🟢'}
-      </span>
+        {props.placeholder}
+      </label>
     </div>
   );
 };
