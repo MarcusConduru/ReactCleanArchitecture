@@ -93,7 +93,7 @@ describe('SignUp', () => {
     FormHelper.testHttpCallsCount(1)
   });
 
-  it('Should not call sumit if form is invalid', () => {
+  it('Should not call sumbit if form is invalid', () => {
     Http.mockOK()
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
     FormHelper.testHttpCallsCount(0)
