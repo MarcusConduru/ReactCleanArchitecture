@@ -2,12 +2,16 @@ import * as FormHelper from '../support/form-helper';
 import faker from 'faker';
 import * as Http from '../support/signup-mocks';
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.random.alphaNumeric(7))
   cy.getByTestId('email').focus().type(faker.internet.email())
   const password = faker.random.alphaNumeric(7)
   cy.getByTestId('password').focus().type(password)
   cy.getByTestId('passwordConfirmation').focus().type(password)
+}
+
+const simulateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click();
 }
 
@@ -43,14 +47,10 @@ describe('SignUp', () => {
   });
 
   it('Should present valid state if form is valid', () => {
-    cy.getByTestId('name').focus().type(faker.random.alphaNumeric(7))
+    populateFields()
     FormHelper.testInputStatus('name')
-    cy.getByTestId('email').focus().type(faker.internet.email())
     FormHelper.testInputStatus('email')
-    const password = faker.random.alphaNumeric(5)
-    cy.getByTestId('password').focus().type(password)
     FormHelper.testInputStatus('password')
-    cy.getByTestId('passwordConfirmation').focus().type(password)
     FormHelper.testInputStatus('passwordConfirmation')
     cy.getByTestId('submit').should('not.have.attr', 'disabled');
     cy.getByTestId('error-wrap').should('not.have.descendants');
@@ -85,4 +85,12 @@ describe('SignUp', () => {
     FormHelper.testUrl('/')
     FormHelper.testLocalStorageItem('accessToken')
   });
+
+  it('Should prevent multiple submits', () => {
+    Http.mockOK()
+    populateFields()
+    cy.getByTestId('submit').dblclick();
+    FormHelper.testHttpCallsCount(1)
+  });
+
 });
