@@ -55,14 +55,12 @@ describe('RemoteLoadSurveyList', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
-  test('Should return a list of SurveyModels ig HttpHetClient returns 200', async () => {
+  test('Should return an empty list of SurveyModels ig HttpHetClient returns 204', async () => {
     const { sut, httpGetClientSpy } = makeSut();
-    const httpResutl = mockSurveyListModel();
     httpGetClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
-      body: httpResutl
+      statusCode: HttpStatusCode.noContent,
     };
     const surveyList = await sut.loadAll();
-    expect(surveyList).toEqual(httpResutl);
+    expect(surveyList).toEqual([]);
   });
 });
