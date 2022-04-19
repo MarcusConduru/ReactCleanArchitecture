@@ -2,7 +2,7 @@ import Styles from './spinner-styles.scss';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
-export const Spinner = (props: Props) => {
+const Spinner = (props: Props) => {
   return (
     <div
       {...props}
@@ -16,3 +16,5 @@ export const Spinner = (props: Props) => {
     </div>
   );
 };
+
+export default Spinner;

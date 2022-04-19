@@ -6,7 +6,7 @@ type Factory = {
   makeSignUp: React.FC;
 };
 
-export const Router = (factory: Factory) => {
+const Router = (factory: Factory) => {
   return (
     <BrowserRouter>
       <Switch>
@@ -17,3 +17,6 @@ export const Router = (factory: Factory) => {
     </BrowserRouter>
   );
 };
+
+export default Router
+ 

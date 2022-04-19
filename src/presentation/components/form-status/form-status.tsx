@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { Spinner } from '../spinner/spinner';
+import { Spinner } from '@/presentation/components';
 import Styles from './form-status-styles.scss';
 import Context from '@/presentation/contexts/form/form-context';
 
-export const FormStatus = () => {
+const FormStatus = () => {
   const { state } = useContext(Context);
   const { isLoading, mainError } = state;
 
@@ -18,3 +18,5 @@ export const FormStatus = () => {
     </div>
   );
 };
+
+export default FormStatus

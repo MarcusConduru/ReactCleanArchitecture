@@ -7,7 +7,7 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 >;
 
-export const Input = (props: Props) => {
+const Input = (props: Props) => {
   const { state, setState } = useContext(Context);
   const error = state[`${props.name}Error`];
 
@@ -41,3 +41,5 @@ export const Input = (props: Props) => {
     </div>
   );
 };
+
+export default Input;
