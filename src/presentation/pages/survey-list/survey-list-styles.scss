@@ -92,6 +92,25 @@
           flex-grow: 1;
           background-repeat: no-repeat;
           background-image: linear-gradient(to right, rgba($primaryLight, .1) 54px, rgba($white, .1) 54px);
+          position: relative;
+
+          .iconWrap {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 10px;
+            border-radius: 100%;
+            display: flex;
+            box-shadow: 0px 1px 3px -1px $black;
+
+            &.red {
+              background-color: $invalid;
+            }
+
+            &.green {
+              background-color: $valid;
+            }
+          }
           
           time {
             display: flex;
