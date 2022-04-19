@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 const LoginHeader = memo(() => {
   return (
-    <header className={Styles.header}>
+    <header className={Styles.headerWrap}>
       <Logo />
       <h1>4Dev - Enquetes para Programadores</h1>
     </header>
