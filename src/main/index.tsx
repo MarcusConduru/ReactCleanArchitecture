@@ -1,10 +1,6 @@
+/* eslint-disable prettier/prettier */
 import ReactDOM from 'react-dom';
-import { Router } from '@/presentation/components';
-import { makeLogin } from './factories/pages/login/login-factory';
-import { makeSinup } from './factories/pages/signup/signup-factory';
 import '@/presentation/styles/global.scss';
+import Router from './routes/router';
 
-ReactDOM.render(
-  <Router makeLogin={makeLogin} makeSignUp={makeSinup} />,
-  document.getElementById('main'),
-);
+ReactDOM.render(<Router />, document.getElementById('main'));
