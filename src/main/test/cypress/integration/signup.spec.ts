@@ -1,19 +1,20 @@
+/* eslint-disable prettier/prettier */
 import * as FormHelper from '../support/form-helper';
 import faker from 'faker';
 import * as Http from '../support/signup-mocks';
 
 const populateFields = (): void => {
-  cy.getByTestId('name').focus().type(faker.random.alphaNumeric(7))
-  cy.getByTestId('email').focus().type(faker.internet.email())
-  const password = faker.random.alphaNumeric(7)
-  cy.getByTestId('password').focus().type(password)
-  cy.getByTestId('passwordConfirmation').focus().type(password)
-}
+  cy.getByTestId('name').focus().type(faker.random.alphaNumeric(7));
+  cy.getByTestId('email').focus().type(faker.internet.email());
+  const password = faker.random.alphaNumeric(7);
+  cy.getByTestId('password').focus().type(password);
+  cy.getByTestId('passwordConfirmation').focus().type(password);
+};
 
 const simulateValidSubmit = (): void => {
-  populateFields()
+  populateFields();
   cy.getByTestId('submit').click();
-}
+};
 
 describe('SignUp', () => {
   beforeEach(() => {
@@ -40,63 +41,71 @@ describe('SignUp', () => {
     FormHelper.testInputStatus('email', 'Valor inválido');
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(3));
     FormHelper.testInputStatus('password', 'Valor inválido');
-    cy.getByTestId('passwordConfirmation').focus().type(faker.random.alphaNumeric(4));
+    cy.getByTestId('passwordConfirmation')
+      .focus()
+      .type(faker.random.alphaNumeric(4));
     FormHelper.testInputStatus('passwordConfirmation', 'Valor inválido');
     cy.getByTestId('submit').should('have.attr', 'disabled');
     cy.getByTestId('error-wrap').should('not.have.descendants');
   });
 
   it('Should present valid state if form is valid', () => {
-    populateFields()
-    FormHelper.testInputStatus('name')
-    FormHelper.testInputStatus('email')
-    FormHelper.testInputStatus('password')
-    FormHelper.testInputStatus('passwordConfirmation')
+    populateFields();
+    FormHelper.testInputStatus('name');
+    FormHelper.testInputStatus('email');
+    FormHelper.testInputStatus('password');
+    FormHelper.testInputStatus('passwordConfirmation');
     cy.getByTestId('submit').should('not.have.attr', 'disabled');
     cy.getByTestId('error-wrap').should('not.have.descendants');
   });
 
   it('Should present EmailInUseError on 403', () => {
-    Http.mockEmailInUseError()
-    simulateValidSubmit()
-    FormHelper.testMainError('Esse e-mail já está em uso')
-    FormHelper.testUrl('/signup')
+    Http.mockEmailInUseError();
+    simulateValidSubmit();
+    FormHelper.testMainError('Esse e-mail já está em uso');
+    FormHelper.testUrl('/signup');
   });
 
   it('Should present UnexpectedError on default error cases', () => {
-    Http.mockUnexpectedError()
-    simulateValidSubmit()
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve')
-    FormHelper.testUrl('/signup')
+    Http.mockUnexpectedError();
+    simulateValidSubmit();
+    FormHelper.testMainError(
+      'Algo de errado aconteceu. Tente novamente em breve',
+    );
+    FormHelper.testUrl('/signup');
   });
 
   it('Should present UnexpectedError if invalid data is returned', () => {
-    Http.mockInvalidData()
-    simulateValidSubmit()
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve')
-    FormHelper.testUrl('/signup')
+    Http.mockInvalidData();
+    simulateValidSubmit();
+    FormHelper.testMainError(
+      'Algo de errado aconteceu. Tente novamente em breve',
+    );
+    FormHelper.testUrl('/signup');
   });
 
-  it('Should present save accessToken if valid credentials are provied', () => {
-    Http.mockOK()
-    simulateValidSubmit()
-    cy.getByTestId('main-error').should('not.exist')
+  it('Should present save account if valid credentials are provied', () => {
+    Http.mockOK();
+    simulateValidSubmit();
+    cy.getByTestId('main-error').should('not.exist');
     cy.getByTestId('spinner').should('not.exist');
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testUrl('/');
+    FormHelper.testLocalStorageItem('account');
   });
 
   it('Should prevent multiple submits', () => {
-    Http.mockOK()
-    populateFields()
+    Http.mockOK();
+    populateFields();
     cy.getByTestId('submit').dblclick();
-    FormHelper.testHttpCallsCount(1)
+    FormHelper.testHttpCallsCount(1);
   });
 
   it('Should not call sumbit if form is invalid', () => {
-    Http.mockOK()
-    cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-    FormHelper.testHttpCallsCount(0)
+    Http.mockOK();
+    cy.getByTestId('email')
+      .focus()
+      .type(faker.internet.email())
+      .type('{enter}');
+    FormHelper.testHttpCallsCount(0);
   });
-
 });
