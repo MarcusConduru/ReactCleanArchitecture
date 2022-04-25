@@ -1,14 +1,15 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import faker from 'faker';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
-import Context from '@/presentation/contexts/form/form-context'
 import { Input } from '@/presentation/components';
+import { FormContext } from '@/presentation/contexts';
 
 const makeSut = (fieldName: string): RenderResult => {
   return render(
-    <Context.Provider value={{ state: {} }}>
+    <FormContext.Provider value={{ state: {} }}>
       <Input name={fieldName} />
-    </Context.Provider>,
+    </FormContext.Provider>,
   );
 };
 
@@ -32,8 +33,8 @@ describe('Input Component', () => {
     const field = faker.database.column();
     const { getByTestId } = makeSut(field);
     const input = getByTestId(field);
-    const label = getByTestId(`${field}-label`)
+    const label = getByTestId(`${field}-label`);
     fireEvent.click(label);
-    expect(input.focus).toBeTruthy()
+    expect(input.focus).toBeTruthy();
   });
 });

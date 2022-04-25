@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { AccountModel } from '@/domain/models';
 import { mockAccountModel } from '@/domain/test';
 import { AddAccount, AddAccountParams } from '@/domain/usecases';
