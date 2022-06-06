@@ -12,10 +12,10 @@ describe('CurrentAccountAdapter', () => {
     setCurrentAccountAdpter(account);
     expect(setSpy).toHaveBeenCalledWith('account', account);
   });
-  
+
   test('Should throw UnexpectedError', () => {
     expect(() => {
       setCurrentAccountAdpter(undefined);
-    }).toThrow(new UnexpectedError())
+    }).toThrow(new UnexpectedError());
   });
 });
