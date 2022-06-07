@@ -9,3 +9,7 @@ export const setCurrentAccountAdpter = (account: AccountModel): void => {
   }
   makeLocalLocalStorage().set('account', account);
 };
+
+export const getCurrentAccountAdpter = (): AccountModel => {
+  return makeLocalLocalStorage().get('account');
+};
