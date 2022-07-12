@@ -1,5 +1,5 @@
 import React from 'react';
-import SurveyItem from './survey-item';
+import SurveyItem from './item';
 import { render, screen } from '@testing-library/react';
 import { mockSurveyModel } from '@/domain/test';
 import { IconName } from '@/presentation/components';
