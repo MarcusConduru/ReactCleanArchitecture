@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import SurveyList from '@/presentation/pages/survey-list/survey-list';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { makeLogin } from '@/main/factories/pages/login/login-factory';
 import { makeSinup } from '@/main/factories/pages/signup/signup-factory';
 import { ApiContext } from '@/presentation/contexts';
 import { getCurrentAccountAdpter, setCurrentAccountAdpter } from '../adapters/current-account-adapter';
 import { PrivateRoute } from '@/presentation/components';
+import { makeSurveyList } from '../factories/pages/survey-list/survey-list-factory';
 
 const Router: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const Router: React.FC = () => {
         <Switch>
           <Route path="/login" exact component={makeLogin} />
           <Route path="/signup" exact component={makeSinup} />
-          <PrivateRoute path="/" exact component={SurveyList} />
+          <PrivateRoute path="/" exact component={makeSurveyList} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
