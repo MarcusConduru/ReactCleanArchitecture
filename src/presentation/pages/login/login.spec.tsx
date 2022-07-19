@@ -17,16 +17,16 @@ import Login from './login';
 import faker from 'faker';
 import { InvalidCredentialsError } from '@/domain/errors';
 import { Router } from 'react-router-dom';
-import { AccountModel } from '@/domain/models';
+import { Authentication } from '@/domain/usecases';
 
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: Authentication.Model) => void;
 };
 
 type SutParams = {
-  validationError?: string;
+  validationError: string;
 };
 
 const history = createMemoryHistory({ initialEntries: ['/login'] });

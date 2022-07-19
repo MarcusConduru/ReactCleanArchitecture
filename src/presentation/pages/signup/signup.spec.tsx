@@ -18,12 +18,12 @@ import {
 } from '@/presentation/test';
 import faker from 'faker';
 import { EmailInUseError } from '@/validation/errors';
-import { AccountModel } from '@/domain/models';
+import { AddAccount } from '@/domain/usecases';
 
 type SutTypes = {
   sut: RenderResult;
   addAccountSpy: AddAccountSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: AddAccount.Model) => void;
 };
 
 type SutParams = {
