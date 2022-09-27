@@ -17,6 +17,13 @@ describe('SurveyList', () => {
   it('Should logout on AccessDeniedError', () => {
     Http.mockAccessDeniedError();
     cy.visit('');
-    Helper.testUrl('/login')
+    Helper.testUrl('/login');
+  })
+
+  it('Should present correct username', () => {
+    Http.mockAccessDeniedError();
+    cy.visit('');
+    const { name } = Helper.getLocalStorageItem('account')
+    cy.getByTestId('username').should('contain.text', name);
   })
 });
