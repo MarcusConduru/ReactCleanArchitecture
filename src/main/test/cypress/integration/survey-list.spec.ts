@@ -21,9 +21,15 @@ describe('SurveyList', () => {
   })
 
   it('Should present correct username', () => {
-    Http.mockAccessDeniedError();
+    Http.mockUnexpectedError();
     cy.visit('');
     const { name } = Helper.getLocalStorageItem('account')
     cy.getByTestId('username').should('contain.text', name);
+  })
+  it('Should logout on logoout link click', () => {
+    Http.mockUnexpectedError();
+    cy.visit('');
+    cy.getByTestId('logout').click();
+    Helper.testUrl('/login');
   })
 });
