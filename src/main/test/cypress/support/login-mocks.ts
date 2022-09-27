@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
-import * as Helper from './http-mocks';
+import * as Http from './http-mocks';
 import faker from 'faker'
 
-export const mockInvalidCredentialsError = (): void => Helper.mockInvalidCredentialsError(/login/);
-export const mockUnexpectedError = (): void => Helper.mockUnexpectedError(/login/, 'POST');
-export const mockOK = (): void => Helper.mockOk(/login/, 'POST', { accessToken: faker.datatype.uuid(), name: faker.name.findName });
-export const mockInvalidData = (): void => Helper.mockOk(/login/, 'POST', { invalid: faker.datatype.uuid() });
+export const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(/login/);
+export const mockUnexpectedError = (): void => Http.mockServerError(/login/, 'POST');
+export const mockOK = (): void => Http.mockOk(/login/, 'POST', { accessToken: faker.datatype.uuid(), name: faker.name.findName });
