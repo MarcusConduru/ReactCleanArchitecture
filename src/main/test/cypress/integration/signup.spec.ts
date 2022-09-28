@@ -1,8 +1,13 @@
 /* eslint-disable prettier/prettier */
-import * as FormHelper from '../support/form-helpers';
+import * as FormHelper from '../utils/form-helpers';
 import faker from 'faker';
-import * as Http from '../support/signup-mocks';
-import * as Helper from '../support/helpers';
+import * as Http from '../utils/http-mocks';
+import * as Helper from '../utils/helpers';
+
+const path = /signup/
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST');
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST');
+const mockSuccess = (): void => Http.mockOk(path, 'POST', 'fx:account');
 
 const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.random.alphaNumeric(7));
@@ -61,14 +66,14 @@ describe('SignUp', () => {
   });
 
   it('Should present EmailInUseError on 403', () => {
-    Http.mockEmailInUseError();
+    mockEmailInUseError();
     simulateValidSubmit();
     FormHelper.testMainError('Esse e-mail já está em uso');
     Helper.testUrl('/signup');
   });
 
   it('Should present UnexpectedError on default error cases', () => {
-    Http.mockUnexpectedError();
+    mockUnexpectedError();
     simulateValidSubmit();
     FormHelper.testMainError(
       'Algo de errado aconteceu. Tente novamente em breve',
@@ -77,7 +82,7 @@ describe('SignUp', () => {
   });
 
   it('Should present save account if valid credentials are provied', () => {
-    Http.mockOK();
+    mockSuccess();
     simulateValidSubmit();
     cy.getByTestId('main-error').should('not.exist');
     cy.getByTestId('spinner').should('not.exist');
@@ -86,14 +91,14 @@ describe('SignUp', () => {
   });
 
   it('Should prevent multiple submits', () => {
-    Http.mockOK();
+    mockSuccess();
     populateFields();
     cy.getByTestId('submit').dblclick();
     Helper.testHttpCallsCount(1);
   });
 
   it('Should not call sumbit if form is invalid', () => {
-    Http.mockOK();
+    mockSuccess();
     cy.getByTestId('email')
       .focus()
       .type(faker.internet.email())
