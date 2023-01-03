@@ -6,6 +6,6 @@ export class RemoteLoadSurveyResult {
     private readonly httpGetClient: HttpGetClient,
   ) {}
   async load(): Promise<void> {
-    await this.httpGetClient.get({url: this.url})
+    await this.httpGetClient.get({ url: this.url });
   }
 }
