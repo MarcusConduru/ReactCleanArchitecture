@@ -12,7 +12,7 @@ type Props = {
 const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
   const handlerError = useErrorHandler((error: Error) => {
     setState({ ...state, error: error.message });
-  })
+  });
   const [state, setState] = useState({
     surveys: [] as LoadSurveyList.Model[],
     error: '',
