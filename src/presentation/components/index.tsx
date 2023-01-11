@@ -10,3 +10,4 @@ export { default as FormStatus } from './form-status/form-status';
 export { default as SubmitButton } from './submit-button/submit-button';
 export {default as PrivateRoute} from './private-route/private-route';
 export {default as Loading} from './loading/loading';
+export {default as Calendar} from './calendar/calendar';
