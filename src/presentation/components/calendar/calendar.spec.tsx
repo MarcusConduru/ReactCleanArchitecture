@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Calendar, IconName } from '@/presentation/components';
+import { Calendar } from '@/presentation/components';
 
 const makeSut = (date: Date): void => {
   render(<Calendar date={date} />);
