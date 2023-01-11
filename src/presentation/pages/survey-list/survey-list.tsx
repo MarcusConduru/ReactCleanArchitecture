@@ -1,5 +1,5 @@
 import { LoadSurveyList } from '@/domain/usecases';
-import { Error, Footer, Header } from '@/presentation/components';
+import { Footer, Header, Error } from '@/presentation/components';
 import { useErrorHandler } from '@/presentation/hooks';
 import React, { useEffect, useState } from 'react';
 import { SurveyContext, SurveyListItem } from './components';
