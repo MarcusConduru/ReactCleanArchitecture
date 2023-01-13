@@ -5,16 +5,24 @@ import {
   Calendar,
   Error,
 } from '@/presentation/components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from './survey-result-styles.scss';
 import { LoadSurveyResult } from '@/domain/usecases';
 
-const SurveyResult: React.FC = () => {
+type Props = {
+  loadSurveyResult: LoadSurveyResult;
+};
+
+const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
   const [state] = useState({
     isLoading: false,
     error: '',
     SurveyResult: null as LoadSurveyResult.Model,
   });
+
+  useEffect(() => {
+    loadSurveyResult.load().then().catch();
+  }, []);
 
   return (
     <div className={Styles.surveyResultWrap}>
