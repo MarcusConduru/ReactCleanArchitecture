@@ -15,8 +15,8 @@ type SutTypes = {
 };
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
-  const history = createMemoryHistory({ initialEntries: ['/'] })
-  const setCurrentAccountMock = jest.fn()
+  const history = createMemoryHistory({ initialEntries: ['/'] });
+  const setCurrentAccountMock = jest.fn();
   render(
     <ApiContext.Provider
       value={{
@@ -33,7 +33,7 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   return {
     loadSurveyListSpy,
     history,
-    setCurrentAccountMock
+    setCurrentAccountMock,
   };
 };
 
@@ -72,7 +72,9 @@ describe('SurveyList Component', () => {
 
   test('Should logout on AccessDeniedError', async () => {
     const loadSurveyListSpy = new LoadSurveyListSpy();
-    jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(new AccessDeniedError);
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new AccessDeniedError());
     const { history, setCurrentAccountMock } = makeSut(loadSurveyListSpy);
     await waitFor(() => screen.getByRole('heading'));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
