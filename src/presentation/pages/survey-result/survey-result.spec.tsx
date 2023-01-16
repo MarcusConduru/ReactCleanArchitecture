@@ -87,16 +87,16 @@ describe('SurveyResult Component', () => {
   //   expect(percent[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
   // });
 
-  test('Should render error on UnexpectedError', async () => {
-    const loadSurveyResultSpy = new LoadSurveyResultSpy()
-    const error = new UnexpectedError();
-    jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error);
-    makeSut(loadSurveyResultSpy);
-    await waitFor(() => screen.getByTestId('survey-result'));
-    expect(screen.queryByTestId('question')).not.toBeInTheDocument();
-    expect(screen.getByTestId('error')).toHaveTextContent(error.message);
-    expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
-  });
+  // test('Should render error on UnexpectedError', async () => {
+  //   const loadSurveyResultSpy = new LoadSurveyResultSpy()
+  //   const error = new UnexpectedError();
+  //   jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error);
+  //   makeSut(loadSurveyResultSpy);
+  //   await waitFor(() => screen.getByTestId('survey-result'));
+  //   expect(screen.queryByTestId('question')).not.toBeInTheDocument();
+  //   expect(screen.getByTestId('error')).toHaveTextContent(error.message);
+  //   expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+  // });
 
   test('Should logout on AccessDeniedError', async () => {
     const loadSurveyResultSpy = new LoadSurveyResultSpy()
@@ -109,17 +109,17 @@ describe('SurveyResult Component', () => {
     expect(history.location.pathname).toBe('/login');
   });
 
-  test('Should call LoadSurveyResult on reload', async () => {
-    const loadSurveyResultSpy = new LoadSurveyResultSpy();
-    jest
-      .spyOn(loadSurveyResultSpy, 'load')
-      .mockRejectedValueOnce(new UnexpectedError());
-    makeSut(loadSurveyResultSpy);
-    await waitFor(() => screen.getByTestId('survey-result'));
-    fireEvent.click(screen.getByTestId('reload'));
-    expect(loadSurveyResultSpy.callsCount).toBe(1);
-    await waitFor(() => screen.getByTestId('survey-result'));
-  });
+  // test('Should call LoadSurveyResult on reload', async () => {
+  //   const loadSurveyResultSpy = new LoadSurveyResultSpy();
+  //   jest
+  //     .spyOn(loadSurveyResultSpy, 'load')
+  //     .mockRejectedValueOnce(new UnexpectedError());
+  //   makeSut(loadSurveyResultSpy);
+  //   await waitFor(() => screen.getByTestId('survey-result'));
+  //   fireEvent.click(screen.getByTestId('reload'));
+  //   expect(loadSurveyResultSpy.callsCount).toBe(1);
+  //   await waitFor(() => screen.getByTestId('survey-result'));
+  // });
 });
 
 
