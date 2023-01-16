@@ -28,9 +28,10 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
   useEffect(() => {
     loadSurveyResult
       .load()
-      .then((surveyResult) =>
-        setState((old) => ({ ...old, surveyResult })).catch(handlerError),
-      );
+      .then((surveyResult) => {
+        setState((old) => ({ ...old, surveyResult }));
+      })
+      .catch(handlerError);
   }, []);
 
   return (
