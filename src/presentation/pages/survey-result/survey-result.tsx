@@ -14,14 +14,16 @@ type Props = {
 };
 
 const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     isLoading: false,
     error: '',
     SurveyResult: null as LoadSurveyResult.Model,
   });
 
   useEffect(() => {
-    loadSurveyResult.load().then().catch();
+    loadSurveyResult
+      .load()
+      .then((surveyResult) => setState((old) => ({ ...old, surveyResult })));
   }, []);
 
   return (
@@ -31,20 +33,36 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
         {state.SurveyResult && (
           <>
             <hgroup>
-              <Calendar date={new Date()} className={Styles.calendarWrap} />
-              <h2>Qual é o seu framework web favorito?</h2>
+              <Calendar
+                date={state.SurveyResult.date}
+                className={Styles.calendarWrap}
+              />
+              <h2 data-testid="question">{state.SurveyResult.question}</h2>
             </hgroup>
-            <ul className={Styles.answerList}>
-              <li>
-                <img src="https://reactnative.dev/img/tiny_logo.png" />
-                <span className={Styles.answer}></span>
-                <span className={Styles.percent}>50%</span>
-              </li>
-              <li className={Styles.active}>
-                <img src="https://reactnative.dev/img/tiny_logo.png" />
-                <span className={Styles.answer}></span>
-                <span className={Styles.percent}>50%</span>
-              </li>
+            <ul data-testid="answers" className={Styles.answerList}>
+              {state.SurveyResult.answers.map((answers) => (
+                <li
+                  data-testid="answer-wrap"
+                  key={answers.answer}
+                  className={
+                    answers.isCurrentAccountAnswer ? Styles.active : ''
+                  }
+                >
+                  {answers.image && (
+                    <img
+                      data-testid="image"
+                      src={answers.image}
+                      alt={answers.image}
+                    />
+                  )}
+                  <span data-testid="answer" className={Styles.answer}>
+                    {answers.answer}
+                  </span>
+                  <span data-testid="percent" className={Styles.percent}>
+                    {answers.percent}
+                  </span>
+                </li>
+              ))}
             </ul>
             <button>Voltar</button>
           </>
