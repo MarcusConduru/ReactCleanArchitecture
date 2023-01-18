@@ -1,18 +1,13 @@
 import React from 'react';
 import Styles from './answer-styles.scss';
+import { SurveyResultAnswerModel } from '@/domain/models';
 
 type Props = {
-  answers: {
-    image?: string;
-    answer: string;
-    count: number;
-    percent: number;
-    isCurrentAccountAnswer: boolean;
-  };
+  answers: SurveyResultAnswerModel;
 };
 
 const Answer: React.FC<Props> = ({ answers }: Props) => {
-  const activeClassName = answers.isCurrentAccountAnswer ? Styles.active : ''
+  const activeClassName = answers.isCurrentAccountAnswer ? Styles.active : '';
   return (
     <li
       data-testid="answer-wrap"
