@@ -3,6 +3,7 @@ import React from 'react';
 import SurveyResult from './survey-result';
 import {
   LoadSurveyResultSpy,
+  SaveSurveyResultSpy,
   mockAccountModel,
   mockSurveyResultModel,
 } from '@/domain/test';
@@ -11,6 +12,7 @@ import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { AccountModel } from '@/domain/models';
+import { RemoteSaveSurveyResult } from '@/data/usecases/save-survey-result/remote-save-survey-result';
 
 type SutType = {
   loadSurveyResultSpy: LoadSurveyResultSpy;
@@ -32,7 +34,10 @@ const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutType => {
       }}
     >
       <Router history={history}>
-        <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
+        <SurveyResult
+          loadSurveyResult={loadSurveyResultSpy}
+          saveSurveyResult={new SaveSurveyResultSpy()}
+        />
       </Router>
     </ApiContext.Provider>,
   );
