@@ -17,10 +17,12 @@ export class RemoteSaveSurveyResult implements SaveSurveyResult {
     });
 
     switch (httpResponse.statusCode) {
+      case HttpStatusCode.ok:
+        return null;
       case HttpStatusCode.forbidden:
         throw new AccessDeniedError();
       default:
-        return null;
+        throw new UnexpectedError();
     }
   }
 }
