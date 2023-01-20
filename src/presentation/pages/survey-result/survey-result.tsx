@@ -8,12 +8,20 @@ import { SaveSurveyResult } from '@/domain/usecases/save-survey-result';
 
 type Props = {
   loadSurveyResult: LoadSurveyResult;
-  saveSurveyResult: SaveSurveyResult
+  saveSurveyResult: SaveSurveyResult;
 };
 
-const SurveyResult: React.FC<Props> = ({ loadSurveyResult, saveSurveyResult }: Props) => {
+const SurveyResult: React.FC<Props> = ({
+  loadSurveyResult,
+  saveSurveyResult,
+}: Props) => {
   const handlerError = useErrorHandler((error: Error) => {
-    setState({ ...state, SurveyResult: null, isLoading: false, error: error.message });
+    setState({
+      ...state,
+      SurveyResult: null,
+      isLoading: false,
+      error: error.message,
+    });
   });
 
   const [state, setState] = useState({
@@ -24,9 +32,14 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult, saveSurveyResult }: P
   });
 
   const onAnswer = (answer: string): void => {
-    setState(old => ({...old, isLoading: true})
-    saveSurveyResult.save({ answer ).then().catch(handlerError)
-  }
+    setState((old) => ({ ...old, isLoading: true }));
+    saveSurveyResult
+      .save({ answer })
+      .then((surveyResult) => {
+        setState((old) => ({ ...old, surveyResult }));
+      })
+      .catch(handlerError);
+  };
 
   const reload = (): void =>
     setState((old) => ({
